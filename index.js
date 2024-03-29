@@ -9,7 +9,8 @@ const client = new Client({
         GatewayIntentBits.Guilds,
         GatewayIntentBits.GuildMessages,
         GatewayIntentBits.DirectMessages
-    ]
+    ],
+    restRequestTimeout: 120000
 });
 
 /* ----- Variables ----- */
@@ -17,8 +18,11 @@ client.commands = new Collection();
 client.messageCommands = new Collection();
 client.config = require("./config.js")
 
-/* ----- Anti Crash -----*/
+/* ----- Handlers ----- */
 
+
+
+/* ----- Anti Crash -----*/
 process.on("unhandledRejection", (reason, p) => {
     console.log(chalk.gray("————————————————————————————————————————————————————"));
     console.log(
