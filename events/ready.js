@@ -9,10 +9,12 @@ module.exports = {
 	async execute(c) {
         logger.log(`${c.user.username} is ready`)
         
+        // --- Code from discordjs.guide website ---
+
         const clientId = c.user.id
         const commands = [];
         // Grab all the command folders from the commands directory you created earlier
-        const foldersPath = path.join(__dirname, 'commands/slash');
+        const foldersPath = path.join(__dirname, '../commands/slash');
         const commandFolders = fs.readdirSync(foldersPath);
 
         for (const folder of commandFolders) {
@@ -35,7 +37,7 @@ module.exports = {
         // and deploy your commands!
         (async () => {
             try {
-                console.log(`Started refreshing ${commands.length} application (/) commands.`);
+                logger.log(`Started loading ${commands.length} (/) commands.`);
 
                 // The put method is used to fully refresh all commands in the guild with the current set
                 const data = await rest.put(
@@ -43,10 +45,10 @@ module.exports = {
                     { body: commands },
                 );
 
-                console.log(`Successfully reloaded ${data.length} application (/) commands.`);
+                logger.log(`Successfully reloaded ${data.length} (/) commands.`);
             } catch (error) {
                 // And of course, make sure you catch and log any errors!
-                console.error(error);
+                logger.error(error);
             }
         })();
     },

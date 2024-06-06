@@ -7,10 +7,7 @@ const chalk = require("chalk")
 const client = new Client({
     intents: [
         GatewayIntentBits.Guilds,
-        GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.DirectMessages
-    ],
-    restRequestTimeout: 120000
+    ]
 });
 
 /* ----- Variables ----- */
@@ -19,46 +16,35 @@ client.messageCommands = new Collection();
 client.config = require("./config.js")
 
 /* ----- Handlers ----- */
-
+require("./handlers/events.js")(client)
+require("./handlers/slashCommands.js")(client)
 
 
 /* ----- Anti Crash -----*/
 process.on("unhandledRejection", (reason, p) => {
-    console.log(chalk.gray("————————————————————————————————————————————————————"));
-    console.log(
-       chalk.white("["),
-       chalk.red.bold("AntiCrash"),
-       chalk.white("]"),
-       chalk.gray(" : "),
-       chalk.white.bold("Unhandled Rejection/Catch")
-    );
-    console.log(chalk.gray("————————————————————————————————————————————————————"));
-    console.log(reason, p);
- });
- process.on("uncaughtException", (err, origin) => {
-    console.log(chalk.gray("————————————————————————————————————————————————————"));
-    console.log(
-       chalk.white("["),
-       chalk.red.bold("AntiCrash"),
-       chalk.white("]"),
-       chalk.gray(" : "),
-       chalk.white.bold("Uncaught Exception/Catch")
-    );
-    console.log(chalk.gray("————————————————————————————————————————————————————"));
-    console.log(err, origin);
- });
- process.on("multipleResolves", (type, promise, reason) => {
-    console.log(chalk.gray("————————————————————————————————————————————————————"));
-    console.log(
-       chalk.white("["),
-       chalk.red.bold("AntiCrash"),
-       chalk.white("]"),
-       chalk.gray(" : "),
-       chalk.white.bold("Multiple Resolves")
-    );
-    console.log(chalk.gray("————————————————————————————————————————————————————"));
-    console.log(type, promise, reason);
- });
+   console.log(chalk.gray("————————————————————————————————————————————————————"));
+   console.log(
+      chalk.white("["),
+      chalk.red.bold("AntiCrash"),
+      chalk.white("]"),
+      chalk.gray(" : "),
+      chalk.white.bold("Unhandled Rejection/Catch")
+   );
+   console.log(chalk.gray("————————————————————————————————————————————————————"));
+   console.log(reason, p);
+});
+process.on("uncaughtException", (err, origin) => {
+   console.log(chalk.gray("————————————————————————————————————————————————————"));
+   console.log(
+      chalk.white("["),
+      chalk.red.bold("AntiCrash"),
+      chalk.white("]"),
+      chalk.gray(" : "),
+      chalk.white.bold("Uncaught Exception/Catch")
+   );
+   console.log(chalk.gray("————————————————————————————————————————————————————"));
+   console.log(err, origin);
+});
 
 
 /* ----- Logging in ----- */

@@ -1,3 +1,4 @@
+// registering an event to handle slash commands
 module.exports = {
 	name: "interactionCreate",
 	async execute(interaction) {
@@ -5,7 +6,7 @@ module.exports = {
             const command = interaction.client.commands.get(interaction.commandName);
     
             if (!command) {
-                console.error(`No command matching ${interaction.commandName} was found.`);
+                await interaction.reply(`❌ No command matching ${interaction.commandName} was found.`);
                 return;
             }
         
@@ -14,9 +15,9 @@ module.exports = {
             } catch (error) {
                 console.error(error);
                 if (interaction.replied || interaction.deferred) {
-                    await interaction.followUp({ content: 'There was an error while executing this command!', ephemeral: true });
+                    await interaction.followUp({ content: '❌ There was an error while executing this command!', ephemeral: true });
                 } else {
-                    await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+                    await interaction.reply({ content: '❌ There was an error while executing this command!', ephemeral: true });
                 }
             }
         }

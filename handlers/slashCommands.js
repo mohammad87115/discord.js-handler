@@ -1,8 +1,9 @@
 const fs = require('node:fs');
 const path = require('node:path');
+
 module.exports = async (client) => {
 
-    const foldersPath = path.join(__dirname, 'commands/slash');
+    const foldersPath = path.join(__dirname, '../commands/slash');
     const commandFolders = fs.readdirSync(foldersPath);
 
     for (const folder of commandFolders) {
