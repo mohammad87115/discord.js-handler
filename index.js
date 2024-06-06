@@ -7,17 +7,21 @@ const chalk = require("chalk")
 const client = new Client({
     intents: [
         GatewayIntentBits.Guilds,
+        GatewayIntentBits.MessageContent,
+        GatewayIntentBits.GuildMessages
     ]
 });
 
 /* ----- Variables ----- */
 client.commands = new Collection();
 client.messageCommands = new Collection();
+client.cooldowns = new Collection();
 client.config = require("./config.js")
 
 /* ----- Handlers ----- */
 require("./handlers/events.js")(client)
 require("./handlers/slashCommands.js")(client)
+require("./handlers/messageCommands.js")(client)
 
 
 /* ----- Anti Crash -----*/
