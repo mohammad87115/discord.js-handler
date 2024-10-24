@@ -3,14 +3,12 @@ const { REST, Routes } = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
 const { token } = require("../config.js")
+
 module.exports = {
 	name: "ready",
     once: true,
 	async execute(c) {
         logger.log(`${c.user.username} is ready`)
-        
-        // --- Code from discordjs.guide website ---
-
         const clientId = c.user.id
         const commands = [];
         // Grab all the command folders from the commands directory you created earlier
@@ -34,22 +32,19 @@ module.exports = {
         // Construct and prepare an instance of the REST module
         const rest = new REST().setToken(token);
 
-        // and deploy your commands!
-        (async () => {
-            try {
-                logger.log(`Started loading ${commands.length} (/) commands.`);
+        try {
+            logger.log(`Started loading ${commands.length} (/) commands.`);
 
-                // The put method is used to fully refresh all commands in the guild with the current set
-                const data = await rest.put(
-                    Routes.applicationCommands(clientId),
-                    { body: commands },
-                );
+            // The put method is used to fully refresh all commands in the guild with the current set
+            const data = await rest.put(
+                Routes.applicationCommands(clientId),
+                { body: commands },
+            );
 
-                logger.log(`Successfully reloaded ${data.length} (/) commands.`);
-            } catch (error) {
-                // And of course, make sure you catch and log any errors!
-                logger.error(error);
-            }
-        })();
+            logger.log(`Successfully reloaded ${data.length} (/) commands.`);
+        } catch (error) {
+            // And of course, make sure you catch and log any errors!
+            logger.error(error);
+        }
     },
 };

@@ -1,6 +1,6 @@
-// registering an event to handle message commands
-
 const Embed = require("../functions/EmbedMaker.js");
+
+const MatarzakiFunc = require('../functions/Matarzaki.js')
 
 module.exports = {
 	name: "messageCreate",
@@ -19,14 +19,8 @@ module.exports = {
 
             if (command.usage) msg += `\nYou need to input the command like this: \`${command.usage}\``;
 
-            const embed = new Embed()
-                .setType('error')
-                .setTitle('Input Error')
-                .setMessage(msg)
-                .make();
-
-            await message.reply({ embeds: [embed] });
-            return
+            await message.reply({ content: msg });
+            return;
         }
 
 
@@ -34,12 +28,7 @@ module.exports = {
         try {
             await command.execute(message, args);
         } catch (error) {
-            const embed = new Embed()
-                .setType('error')
-                .setTitle('Executing error')
-                .setMessage("there was an error trying to execute that command!")
-                .make();
-            await message.reply({ embeds: [embed] });
+            await message.reply({ content: 'there was an error trying to execute that command!' });
             logger.error(error)
         }    
     },
